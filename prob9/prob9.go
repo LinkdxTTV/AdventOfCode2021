@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"sort"
 	"strconv"
 )
 
@@ -67,6 +68,7 @@ func main() {
 	}
 
 	// golang sort OMEGALUL
+	sort.Ints(basinSizes)
 
 	length := len(basinSizes)
 	fmt.Println("Part 2: Largest Basins:", basinSizes[length-1], basinSizes[length-2], basinSizes[length-3])
