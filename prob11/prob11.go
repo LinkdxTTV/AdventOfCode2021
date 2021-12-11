@@ -37,7 +37,7 @@ func main() {
 	flashes := 0
 
 	// Loop 100 times
-	for loop := 0; loop < 200; loop++ {
+	for loop := 0; loop < 100; loop++ {
 		for i, row := range grid {
 			for j := range row {
 				increaseAndRecursivelyFlash(i, j, grid, &flashes)
