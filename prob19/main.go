@@ -7,6 +7,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"time"
 )
 
 type Point struct {
@@ -21,7 +22,8 @@ type Scanner struct {
 }
 
 func main() {
-	f, err := os.Open("./input")
+	now := time.Now()
+	f, err := os.Open("./example")
 	if err != nil {
 		log.Fatal("we lost")
 	}
@@ -133,11 +135,7 @@ func main() {
 		}
 	}
 
-	beacons := 0
-	for range beaconMap {
-		beacons++
-	}
-	fmt.Println("Part 1:", beacons)
+	fmt.Println("Part 1:", len(beaconMap))
 
 	// Find manhattans
 	max := 0
@@ -153,6 +151,7 @@ func main() {
 		}
 	}
 	fmt.Println("Part 2:", max)
+	fmt.Println(time.Since(now))
 }
 
 func manhattanDistance(point1, point2 Point) int {
