@@ -23,7 +23,7 @@ type Scanner struct {
 
 func main() {
 	now := time.Now()
-	f, err := os.Open("./example")
+	f, err := os.Open("./input")
 	if err != nil {
 		log.Fatal("we lost")
 	}
@@ -141,7 +141,7 @@ func main() {
 	max := 0
 	for i, scannerPoint1 := range scannerPositions {
 		for j, scannerPoint2 := range scannerPositions {
-			if i == j {
+			if i >= j {
 				continue
 			}
 			dist := manhattanDistance(scannerPoint1, scannerPoint2)
