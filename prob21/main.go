@@ -9,6 +9,9 @@ import (
 	"strings"
 )
 
+// 444356092776315
+// 341960390180808
+
 type dice struct {
 	roll int
 }
@@ -32,7 +35,7 @@ type PlayerState struct {
 }
 
 func main() {
-	f, err := os.Open("./example")
+	f, err := os.Open("./input")
 	if err != nil {
 		log.Fatal("we lost")
 	}
@@ -93,9 +96,9 @@ func main() {
 
 	for playerState.shouldContinue() {
 		playerState.playRound(&scorecard)
-		playerState.print()
+		// playerState.print()
 	}
-	fmt.Println(scorecard)
+	fmt.Println("Part 2:", more(scorecard.player1, scorecard.player2))
 }
 
 func (s playerStateArrays) print() {
@@ -111,6 +114,13 @@ func (s playerStateArrays) print() {
 
 func less(num1, num2 int) int {
 	if num1 < num2 {
+		return num1
+	}
+	return num2
+}
+
+func more(num1, num2 int) int {
+	if num1 > num2 {
 		return num1
 	}
 	return num2
@@ -147,7 +157,6 @@ func (state *playerStateArrays) playRound(scorecard *scorecard) {
 		currentScoreWithSpaces = state.player2
 	}
 
-	// newScoreWithSpaces := scoreWithSpaces{}
 	newScoreWithSpaces := scoreWithSpaces{}
 	for score, spaces := range currentScoreWithSpaces {
 		endUp := [11]int{}
@@ -160,16 +169,16 @@ func (state *playerStateArrays) playRound(scorecard *scorecard) {
 				endUp[newSpace] += (times * num)
 			}
 		}
-		for space, num := range endUp {
+		for space, players := range endUp {
 			if space+score >= 21 {
 				if state.playerTurn == 1 {
-					scorecard.player1 += num
+					scorecard.player1 += (players * countTotalUniverses(state.player2))
 				} else {
-					scorecard.player2 += num
+					scorecard.player2 += (players * countTotalUniverses(state.player1))
 				}
 				continue
 			}
-			newScoreWithSpaces[space+score][space] += num
+			newScoreWithSpaces[score+space][space] += players
 		}
 	}
 
@@ -198,4 +207,14 @@ func (s *playerStateArrays) shouldContinue() bool {
 		}
 	}
 	return false
+}
+
+func countTotalUniverses(input scoreWithSpaces) int {
+	total := 0
+	for _, row := range input {
+		for _, num := range row {
+			total += num
+		}
+	}
+	return total
 }
